@@ -10,6 +10,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "monaco-editor": "^0.34.0",
     "solid-js": "^1.4.7"
   },
   "devDependencies": {
