@@ -1,5 +1,6 @@
 import type { Component } from 'solid-js'
 import Editor from './components/Editor'
+import Header from './components/Header'
 import Node from './components/Node'
 
 const ast = {
@@ -21,13 +22,16 @@ const ast = {
 
 const App: Component = () => {
   return (
-    <div class="grid grid-cols-2 h-100vh">
-      <div>
-        <Editor onInput={() => {}} />
-      </div>
-      <div class="border-l-width-1px border-l-warm-gray-300 p-2">
-        <Node node={ast} />
-      </div>
+    <div>
+      <Header />
+      <main class="grid grid-cols-2">
+        <div>
+          <Editor onInput={() => {}} />
+        </div>
+        <div class="border-l-width-1px border-l-warm-gray-300 p-2">
+          <Node node={ast} />
+        </div>
+      </main>
     </div>
   )
 }
