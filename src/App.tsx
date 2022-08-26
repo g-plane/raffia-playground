@@ -28,7 +28,7 @@ const App: Component = () => {
         <div>
           <Editor onInput={() => {}} />
         </div>
-        <div class="border-l-width-1px border-l-warm-gray-300 p-2 bg-light-100">
+        <div class="border-l-width-1px p-2 bg-light-100">
           <Node node={ast} />
         </div>
       </main>
