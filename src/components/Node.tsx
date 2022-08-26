@@ -54,10 +54,10 @@ const Node: Component<{ node: any }> = (props) => {
                           {value as number}
                         </code>
                       </Match>
-                      <Match when={typeof value === 'boolean'}>
-                        <code class="text-sky-700 ml-1">
-                          {(value as boolean).toString()}
-                        </code>
+                      <Match
+                        when={typeof value === 'boolean' || value === null}
+                      >
+                        <code class="text-sky-700 ml-1">{String(value)}</code>
                       </Match>
                     </Switch>
                   </>
