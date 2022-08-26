@@ -5,3 +5,9 @@ body {
 main {
   min-height: calc(100vh - 3.5rem);
 }
+
+code {
+  font-family: 'Anonymous Pro', monospace;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
