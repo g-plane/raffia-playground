@@ -11,6 +11,7 @@ const Header: Component = () => (
           rel="noopener noreferrer"
           class="mr-4"
         >
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>
           Raffia Repo
         </a>
         <a
@@ -18,6 +19,7 @@ const Header: Component = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>
           Playground Repo
         </a>
       </div>
