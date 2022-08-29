@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js'
+import { type Component, createSignal, Match, Switch } from 'solid-js'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import Node from './components/Node'
@@ -21,15 +21,27 @@ const ast = {
 }
 
 const App: Component = () => {
+  const [syntax, setSyntax] = createSignal('css')
+  const [view, setView] = createSignal('tree')
+
   return (
     <div>
-      <Header />
+      <Header
+        syntax={syntax()}
+        onSyntaxChange={setSyntax}
+        view={view()}
+        onViewChange={setView}
+      />
       <main class="grid grid-cols-2">
         <div>
           <Editor onInput={() => {}} />
         </div>
         <div class="border-l-width-1px p-2 bg-light-100">
-          <Node node={ast} />
+          <Switch>
+            <Match when={view() === 'tree'}>
+              <Node node={ast} />
+            </Match>
+          </Switch>
         </div>
       </main>
     </div>
