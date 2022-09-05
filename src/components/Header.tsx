@@ -8,14 +8,7 @@ import {
 } from 'solid-js'
 import { globalOptionsContext } from '../state'
 
-interface Props {
-  syntax: string
-  view: string
-  onSyntaxChange(value: string): void
-  onViewChange(value: string): void
-}
-
-const Header: Component<Props> = (props) => {
+const Header: Component = () => {
   const [showOptions, setShowOptions] = createSignal(false)
   const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
 
@@ -33,10 +26,6 @@ const Header: Component<Props> = (props) => {
     document.body.addEventListener('click', handler)
     onCleanup(() => document.body.removeEventListener('click', handler))
   })
-
-  const handleSyntaxChange = (event: Event) => {
-    props.onSyntaxChange((event.target as HTMLSelectElement).value)
-  }
 
   return (
     <header class="h-14 p-3 grid grid-cols-2 bg-emerald-50 border-b-width-2px border-b-emerald-200">
@@ -57,7 +46,12 @@ const Header: Component<Props> = (props) => {
             >
               <p class="flex justify-between">
                 <span>Syntax</span>
-                <select value={props.syntax} onInput={handleSyntaxChange}>
+                <select
+                  value={globalOptions.syntax}
+                  onInput={(e) =>
+                    setGlobalOptions('syntax', e.currentTarget.value)
+                  }
+                >
                   <option value="css">CSS</option>
                   <option value="scss">SCSS</option>
                   <option value="sass">Sass</option>
@@ -73,8 +67,8 @@ const Header: Component<Props> = (props) => {
                       class="mr-0.5"
                       name="view"
                       value="tree"
-                      checked={props.view === 'tree'}
-                      onInput={[props.onViewChange, 'tree']}
+                      checked={globalOptions.view === 'tree'}
+                      onInput={() => setGlobalOptions('view', 'tree')}
                     />
                     Tree
                   </label>
@@ -84,8 +78,8 @@ const Header: Component<Props> = (props) => {
                       class="mr-0.5"
                       name="view"
                       value="json"
-                      checked={props.view === 'json'}
-                      onInput={[props.onViewChange, 'json']}
+                      checked={globalOptions.view === 'json'}
+                      onInput={() => setGlobalOptions('view', 'json')}
                     />
                     JSON
                   </label>

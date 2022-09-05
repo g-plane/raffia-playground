@@ -5,6 +5,8 @@ import type { Span } from './raffia'
 export const highlightedSpanSignal = createSignal<Span | null>(null)
 
 export type GlobalOptions = {
+  syntax: string
+  view: string
   highlightOnHover: boolean
 }
 
@@ -16,6 +18,8 @@ export const GlobalOptionsProvider: Component<{ children: JSX.Element }> = (
   props
 ) => {
   const [options, setOptions] = createStore<GlobalOptions>({
+    syntax: 'css',
+    view: 'tree',
     highlightOnHover: true,
   })
 
