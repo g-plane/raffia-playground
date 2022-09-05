@@ -6,6 +6,7 @@ import {
   Show,
   Switch,
 } from 'solid-js'
+import { highlightedSpanSignal } from '../state'
 
 interface Props {
   node: any
@@ -17,9 +18,30 @@ const Node: Component<Props> = (props) => {
   const [childrenExpanded, setChildrenExpanded] = createSignal(
     Object.fromEntries(Object.keys(props.node).map((key) => [key, true]))
   )
+  const [hovered, setHovered] = createSignal(false)
+  const [, setHighlightedSpan] = highlightedSpanSignal
+
+  const handleMouseOver = (event: MouseEvent) => {
+    event.stopPropagation()
+    setHovered(true)
+    if (props.node.span) {
+      setHighlightedSpan(props.node.span)
+    }
+  }
+
+  const handleMouseOut = (event: MouseEvent) => {
+    event.stopPropagation()
+    setHovered(false)
+    setHighlightedSpan(null)
+  }
 
   return (
-    <div class="flex flex-col">
+    <div
+      class="flex flex-col rounded-sm"
+      classList={{ 'bg-light-600': hovered() }}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
       <Show when={!props.hideHead}>
         <button
           class="outline-none border-none bg-none h-min flex"

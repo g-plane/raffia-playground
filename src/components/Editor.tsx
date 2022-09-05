@@ -8,6 +8,7 @@ import {
   splitProps,
 } from 'solid-js'
 import type { ParseError } from '../raffia'
+import { highlightedSpanSignal } from '../state'
 
 interface Props {
   error?: ParseError
@@ -17,6 +18,7 @@ interface Props {
 const Editor: Component<Props> = (props) => {
   const [isEditorReady, setIsEditorReady] = createSignal(false)
   let container: HTMLDivElement | undefined
+  const [highlightedSpan] = highlightedSpanSignal
 
   onMount(async () => {
     if (!container) {
@@ -66,6 +68,32 @@ const Editor: Component<Props> = (props) => {
         monaco.editor.setModelMarkers(model, 'raffia', [])
       }
     })
+
+    createEffect<string[]>((decorations) => {
+      const model = editor.getModel()
+      if (!model) {
+        return [] as string[]
+      }
+
+      const span = highlightedSpan()
+      if (span) {
+        const start = model.getPositionAt(span.start)
+        const end = model.getPositionAt(span.end)
+        return model.deltaDecorations(decorations, [
+          {
+            range: {
+              startLineNumber: start.lineNumber,
+              startColumn: start.column,
+              endLineNumber: end.lineNumber,
+              endColumn: end.column,
+            },
+            options: { className: 'bg-light-700' },
+          },
+        ])
+      } else {
+        return model.deltaDecorations(decorations, [])
+      }
+    }, [])
 
     onCleanup(() => {
       editor.dispose()
