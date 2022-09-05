@@ -7,104 +7,144 @@ import {
   Switch,
 } from 'solid-js'
 
-const Node: Component<{ node: any }> = (props) => {
-  const [expanded, setExpanded] = createSignal(props.node.type === 'Stylesheet')
+interface Props {
+  node: any
+  hideHead?: boolean
+}
+
+const Node: Component<Props> = (props) => {
+  const [expanded, setExpanded] = createSignal(true)
   const [childrenExpanded, setChildrenExpanded] = createSignal(
-    Object.fromEntries(Object.keys(props.node).map((key) => [key, false]))
+    Object.fromEntries(Object.keys(props.node).map((key) => [key, true]))
   )
 
   return (
     <div class="flex flex-col">
-      <button
-        class="outline-none border-none bg-none h-min flex"
-        onClick={() => setExpanded(!expanded())}
+      <Show when={!props.hideHead}>
+        <button
+          class="outline-none border-none bg-none h-min flex"
+          onClick={() => setExpanded(!expanded())}
+        >
+          <div class="w-4">
+            <Show
+              when={expanded()}
+              fallback={<i class="fa-solid fa-caret-right"></i>}
+            >
+              <i class="fa-solid fa-caret-down"></i>
+            </Show>
+          </div>
+          <span>{props.node.type}</span>
+        </button>
+      </Show>
+      <ul
+        class="list-none ml-4"
+        classList={{ hidden: !expanded() && !props.hideHead }}
       >
-        <div class="w-4">
-          <Show
-            when={expanded()}
-            fallback={<i class="fa-solid fa-caret-right"></i>}
-          >
-            <i class="fa-solid fa-caret-down"></i>
-          </Show>
-        </div>
-        <span>{props.node.type}</span>
-      </button>
-      <ul class="list-none ml-4" classList={{ hidden: !expanded() }}>
         <For each={Object.entries(props.node)}>
           {([key, value]) => (
             <li>
-              <Show
-                when={Array.isArray(value)}
-                fallback={
-                  <>
-                    <span class="ml-4 mr-1">
-                      <code class="text-purple-800">{key}</code>:
-                    </span>
-                    <Switch>
-                      <Match when={typeof value === 'object' && value != null}>
-                        <Node node={value} />
-                      </Match>
-                      <Match when={typeof value === 'string'}>
-                        <code class="text-rose-800 ml-1">
-                          {value as string}
-                        </code>
-                      </Match>
-                      <Match when={typeof value === 'number'}>
-                        <code class="text-yellow-700 ml-1">
-                          {value as number}
-                        </code>
-                      </Match>
-                      <Match
-                        when={typeof value === 'boolean' || value === null}
+              <Switch>
+                <Match when={Array.isArray(value)}>
+                  <button
+                    class="h-min flex items-center"
+                    onClick={() =>
+                      setChildrenExpanded((state) => ({
+                        ...state,
+                        [key]: !state[key],
+                      }))
+                    }
+                  >
+                    <span class="w-4">
+                      <Switch
+                        fallback={<i class="fa-solid fa-caret-right"></i>}
                       >
-                        <code class="text-sky-700 ml-1">{String(value)}</code>
-                      </Match>
-                    </Switch>
-                  </>
-                }
-              >
-                <button
-                  class="h-min flex items-center"
-                  onClick={() =>
-                    setChildrenExpanded((state) => ({
-                      ...state,
-                      [key]: !state[key],
-                    }))
-                  }
-                >
-                  <span class="w-4">
+                        <Match when={(value as unknown[]).length === 0}>
+                          &nbsp;
+                        </Match>
+                        <Match when={childrenExpanded()[key]}>
+                          <i class="fa-solid fa-caret-down"></i>
+                        </Match>
+                      </Switch>
+                    </span>
+                    <code class="text-purple-800">{key}</code>:
+                    <span class="ml-3 text-sm">
+                      <Switch
+                        fallback={
+                          <span>
+                            [ {(value as unknown[]).length} elements ]
+                          </span>
+                        }
+                      >
+                        <Match when={(value as unknown[]).length === 0}>
+                          <i>(empty array)</i>
+                        </Match>
+                        <Match when={(value as unknown[]).length === 1}>
+                          <span>[ 1 element ]</span>
+                        </Match>
+                      </Switch>
+                    </span>
+                  </button>
+                  <div
+                    class="ml-4"
+                    classList={{ hidden: childrenExpanded()[key] }}
+                  >
+                    <For each={value as unknown[]}>
+                      {(item) => <Node node={item} />}
+                    </For>
+                  </div>
+                </Match>
+                <Match when={typeof value === 'object' && value != null}>
+                  <button
+                    class="h-min flex items-center"
+                    onClick={() =>
+                      setChildrenExpanded((state) => ({
+                        ...state,
+                        [key]: !state[key],
+                      }))
+                    }
+                  >
+                    <span class="w-4">
+                      <Show
+                        when={childrenExpanded()[key]}
+                        fallback={<i class="fa-solid fa-caret-right"></i>}
+                      >
+                        <i class="fa-solid fa-caret-down"></i>
+                      </Show>
+                    </span>
+                    <code class="text-purple-800">{key}</code>:
                     <Show
-                      when={childrenExpanded()[key]}
-                      fallback={<i class="fa-solid fa-caret-right"></i>}
-                    >
-                      <i class="fa-solid fa-caret-down"></i>
-                    </Show>
-                  </span>
-                  <code class="text-purple-800">{key}</code>:
-                  <span class="ml-3 text-sm">
-                    <Switch
-                      fallback={
-                        <span>[ {(value as unknown[]).length} elements ]</span>
+                      when={
+                        typeof (value as { type?: string }).type === 'string'
                       }
                     >
-                      <Match when={(value as unknown[]).length === 0}>
-                        <i>(empty array)</i>
-                      </Match>
-                      <Match when={(value as unknown[]).length === 1}>
-                        <span>[ 1 element ]</span>
-                      </Match>
-                    </Switch>
+                      <span class="ml-3">
+                        {(value as { type: string }).type}
+                      </span>
+                    </Show>
+                  </button>
+                  <Show when={childrenExpanded()[key]}>
+                    <Node node={value} hideHead />
+                  </Show>
+                </Match>
+                <Match when={typeof value === 'string'}>
+                  <span class="ml-4 mr-1">
+                    <code class="text-purple-800">{key}</code>:
                   </span>
-                </button>
-                <div
-                  class="ml-4"
-                  classList={{ hidden: childrenExpanded()[key] }}
-                >
-                  <For each={value as unknown[]}>
-                    {(item) => <Node node={item} />}
-                  </For>
-                </div>
-              </Show>
+                  <code class="text-rose-800 ml-1">{value as string}</code>
+                </Match>
+                <Match when={typeof value === 'number'}>
+                  <span class="ml-4 mr-1">
+                    <code class="text-purple-800">{key}</code>:
+                  </span>
+                  <code class="text-yellow-700 ml-1">{value as number}</code>
+                </Match>
+                <Match when={typeof value === 'boolean' || value === null}>
+                  <span class="ml-4 mr-1">
+                    <code class="text-purple-800">{key}</code>:
+                  </span>
+                  <code class="text-sky-700 ml-1">{String(value)}</code>
+                </Match>
+              </Switch>
             </li>
           )}
         </For>
