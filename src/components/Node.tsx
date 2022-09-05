@@ -5,8 +5,9 @@ import {
   Match,
   Show,
   Switch,
+  useContext,
 } from 'solid-js'
-import { highlightedSpanSignal } from '../state'
+import { globalOptionsContext, highlightedSpanSignal } from '../state'
 
 interface Props {
   node: any
@@ -18,10 +19,14 @@ const Node: Component<Props> = (props) => {
   const [childrenExpanded, setChildrenExpanded] = createSignal(
     Object.fromEntries(Object.keys(props.node).map((key) => [key, true]))
   )
+  const [globalOptions] = useContext(globalOptionsContext)
   const [hovered, setHovered] = createSignal(false)
   const [, setHighlightedSpan] = highlightedSpanSignal
 
   const handleMouseOver = (event: MouseEvent) => {
+    if (!globalOptions.highlightOnHover) {
+      return
+    }
     event.stopPropagation()
     setHovered(true)
     if (props.node.span) {
@@ -30,6 +35,9 @@ const Node: Component<Props> = (props) => {
   }
 
   const handleMouseOut = (event: MouseEvent) => {
+    if (!globalOptions.highlightOnHover) {
+      return
+    }
     event.stopPropagation()
     setHovered(false)
     setHighlightedSpan(null)

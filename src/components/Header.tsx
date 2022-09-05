@@ -4,7 +4,9 @@ import {
   Show,
   onCleanup,
   createEffect,
+  useContext,
 } from 'solid-js'
+import { globalOptionsContext } from '../state'
 
 interface Props {
   syntax: string
@@ -15,6 +17,7 @@ interface Props {
 
 const Header: Component<Props> = (props) => {
   const [showOptions, setShowOptions] = createSignal(false)
+  const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
 
   let el: HTMLDivElement | undefined
   createEffect(() => {
@@ -87,6 +90,21 @@ const Header: Component<Props> = (props) => {
                     JSON
                   </label>
                 </span>
+              </p>
+              <p>
+                <label class="flex justify-between items-center">
+                  <span>Highlight On Hover</span>
+                  <input
+                    type="checkbox"
+                    checked={globalOptions.highlightOnHover}
+                    onInput={(e) =>
+                      setGlobalOptions(
+                        'highlightOnHover',
+                        e.currentTarget.checked
+                      )
+                    }
+                  />
+                </label>
               </p>
             </section>
           </Show>
