@@ -47,7 +47,10 @@ const App: Component = () => {
             onInput={setCode}
           />
         </div>
-        <div class="border-l-width-1px p-2 bg-light-100">
+        <div
+          class="border-l-width-1px p-2 bg-light-100 overflow-y-scroll"
+          style={{ height: 'calc(100vh - 56px)' }}
+        >
           <Switch>
             <Match when={parser.loading}>Loading WebAssembly module...</Match>
             <Match when={result().err}>{(result().val as ParseError)[1]}</Match>
