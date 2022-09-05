@@ -4,13 +4,17 @@ import {
   createSignal,
   onCleanup,
   Show,
+  createEffect,
+  splitProps,
 } from 'solid-js'
+import type { ParseError } from '../raffia'
 
 interface Props {
+  error?: ParseError
   onInput(value: string): void
 }
 
-const Editor: Component<Props> = ({ onInput }) => {
+const Editor: Component<Props> = (props) => {
   const [isEditorReady, setIsEditorReady] = createSignal(false)
   let container: HTMLDivElement | undefined
 
@@ -35,7 +39,32 @@ const Editor: Component<Props> = ({ onInput }) => {
     setIsEditorReady(true)
 
     editor.onDidChangeModelContent(() => {
-      onInput(editor.getValue())
+      props.onInput(editor.getValue())
+    })
+
+    createEffect(() => {
+      const model = editor.getModel()
+      if (!model) {
+        return
+      }
+
+      const [{ error }] = splitProps(props, ['error'])
+      if (error) {
+        const start = model.getPositionAt(error[0].span.start)
+        const end = model.getPositionAt(error[0].span.end)
+        monaco.editor.setModelMarkers(model, 'raffia', [
+          {
+            severity: monaco.MarkerSeverity.Error,
+            startLineNumber: start.lineNumber,
+            startColumn: start.column,
+            endLineNumber: end.lineNumber,
+            endColumn: end.column,
+            message: error[1],
+          },
+        ])
+      } else {
+        monaco.editor.setModelMarkers(model, 'raffia', [])
+      }
     })
 
     onCleanup(() => {

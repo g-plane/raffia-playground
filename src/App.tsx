@@ -9,9 +9,7 @@ import { Ok, Err, type Result } from 'ts-results'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import Node from './components/Node'
-import { loadWasm, type SyntaxError } from './wasm'
-
-type ParseError = [SyntaxError, string]
+import { loadWasm, type ParseError } from './raffia'
 
 const App: Component = () => {
   const [code, setCode] = createSignal('')
@@ -44,7 +42,10 @@ const App: Component = () => {
       />
       <main class="grid grid-cols-2">
         <div>
-          <Editor onInput={setCode} />
+          <Editor
+            error={result().err ? (result().val as ParseError) : undefined}
+            onInput={setCode}
+          />
         </div>
         <div class="border-l-width-1px p-2 bg-light-100">
           <Switch>
