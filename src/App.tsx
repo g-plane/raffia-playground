@@ -45,6 +45,7 @@ const App: Component = () => {
         </div>
         <div class="border-l-width-1px p-2 bg-light-100">
           <Switch>
+            <Match when={parser.loading}>Loading WebAssembly module...</Match>
             <Match when={view() === 'tree'}>
               <Node node={ast()} />
             </Match>
