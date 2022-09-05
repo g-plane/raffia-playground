@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "monaco-editor": "^0.34.0",
-    "solid-js": "^1.4.7"
+    "solid-js": "^1.4.7",
+    "ts-results": "^3.3.0"
   },
   "devDependencies": {
     "@gplane/tsconfig": "^5.0.0",

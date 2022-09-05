@@ -5,10 +5,13 @@ import {
   Switch,
   createResource,
 } from 'solid-js'
+import { Ok, Err, type Result } from 'ts-results'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import Node from './components/Node'
-import { loadWasm } from './wasm'
+import { loadWasm, type SyntaxError } from './wasm'
+
+type ParseError = [SyntaxError, string]
 
 const App: Component = () => {
   const [code, setCode] = createSignal('')
@@ -19,15 +22,15 @@ const App: Component = () => {
   )
   const [parser] = createResource(wasmURL, loadWasm)
 
-  const ast = () => {
+  const result = (): Result<unknown, ParseError> => {
     const parseStylesheet = parser()
     if (!parseStylesheet) {
-      return {}
+      return Ok({})
     }
     try {
-      return parseStylesheet(code(), syntax())
-    } catch {
-      return {}
+      return Ok(parseStylesheet(code(), syntax()))
+    } catch (error) {
+      return Err(error as ParseError)
     }
   }
 
@@ -46,8 +49,9 @@ const App: Component = () => {
         <div class="border-l-width-1px p-2 bg-light-100">
           <Switch>
             <Match when={parser.loading}>Loading WebAssembly module...</Match>
+            <Match when={result().err}>{(result().val as ParseError)[1]}</Match>
             <Match when={view() === 'tree'}>
-              <Node node={ast()} />
+              <Node node={result().val} />
             </Match>
           </Switch>
         </div>

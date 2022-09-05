@@ -5,6 +5,7 @@ specifiers:
   monaco-editor: ^0.34.0
   prettier: ^2.7.1
   solid-js: ^1.4.7
+  ts-results: ^3.3.0
   typescript: ^4.7.4
   vite: ^3.0.0
   vite-plugin-solid: ^2.3.0
@@ -14,6 +15,7 @@ specifiers:
 dependencies:
   monaco-editor: 0.34.0
   solid-js: 1.4.7
+  ts-results: 3.3.0
 
 devDependencies:
   '@gplane/tsconfig': 5.0.0
@@ -1016,6 +1018,10 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /ts-results/3.3.0:
+    resolution: {integrity: sha512-FWqxGX2NHp5oCyaMd96o2y2uMQmSu8Dey6kvyuFdRJ2AzfmWo3kWa4UsPlCGlfQ/qu03m09ZZtppMoY8EMHuiA==}
+    dev: false
 
   /ts-toolbelt/9.6.0:
     resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}

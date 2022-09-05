@@ -7,3 +7,8 @@ export async function loadWasm(url: string): Promise<Parser> {
   const { parseStylesheet } = await instantiate()
   return parseStylesheet
 }
+
+export type SyntaxError = {
+  kind: unknown
+  span: { start: number; end: number }
+}
