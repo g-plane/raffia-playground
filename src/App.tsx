@@ -1,28 +1,35 @@
-import { type Component, createSignal, Match, Switch } from 'solid-js'
+import {
+  type Component,
+  createSignal,
+  Match,
+  Switch,
+  createResource,
+} from 'solid-js'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import Node from './components/Node'
-
-const ast = {
-  type: 'Stylesheet',
-  statements: [
-    {
-      type: 'AtRule',
-      name: 'media',
-      prelude: null,
-      block: [{ type: 'Declaration', name: 'width', value: [] }],
-    },
-    {
-      type: 'Declaration',
-      name: 'color',
-      value: [{ type: 'Ident', name: 'red' }],
-    },
-  ],
-}
+import { loadWasm } from './wasm'
 
 const App: Component = () => {
+  const [code, setCode] = createSignal('')
   const [syntax, setSyntax] = createSignal('css')
   const [view, setView] = createSignal('tree')
+  const [wasmURL] = createSignal(
+    'https://raffia-wasm.vercel.app/wasm.generated.js'
+  )
+  const [parser] = createResource(wasmURL, loadWasm)
+
+  const ast = () => {
+    const parseStylesheet = parser()
+    if (!parseStylesheet) {
+      return {}
+    }
+    try {
+      return parseStylesheet(code(), syntax())
+    } catch {
+      return {}
+    }
+  }
 
   return (
     <div>
@@ -34,12 +41,12 @@ const App: Component = () => {
       />
       <main class="grid grid-cols-2">
         <div>
-          <Editor onInput={() => {}} />
+          <Editor onInput={setCode} />
         </div>
         <div class="border-l-width-1px p-2 bg-light-100">
           <Switch>
             <Match when={view() === 'tree'}>
-              <Node node={ast} />
+              <Node node={ast()} />
             </Match>
           </Switch>
         </div>
