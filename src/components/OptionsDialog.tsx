@@ -1,7 +1,7 @@
 import { type Component, useContext } from 'solid-js'
 import { globalOptionsContext } from '../state'
 
-const OptionsDialog: Component<{ ref: HTMLDivElement | undefined }> = (
+const OptionsDialog: Component<{ ref?: HTMLDivElement | undefined }> = (
   props
 ) => {
   const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
