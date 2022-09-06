@@ -8,6 +8,8 @@ export type GlobalOptions = {
   syntax: string
   view: string
   highlightOnHover: boolean
+  hideSpan: boolean
+  hideType: boolean
 }
 
 export const globalOptionsContext = createContext<
@@ -21,6 +23,8 @@ export const GlobalOptionsProvider: Component<{ children: JSX.Element }> = (
     syntax: 'css',
     view: 'tree',
     highlightOnHover: true,
+    hideSpan: false,
+    hideType: false,
   })
 
   return (

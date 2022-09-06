@@ -9,7 +9,7 @@ const OptionsDialog: Component<{ ref: HTMLDivElement | undefined }> = (
   return (
     <section
       ref={props.ref}
-      class="border-emerald-600 border-width-1px rounded-sm p-3 w-60 bg-white fixed text-base text-stone-900 grid grid-cols-1 gap-y-2"
+      class="border-emerald-600 border-width-1px rounded-sm p-3 w-80 bg-white fixed text-base text-stone-900 grid grid-cols-1 gap-y-2"
     >
       <p class="flex justify-between">
         <span>Syntax</span>
@@ -23,6 +23,7 @@ const OptionsDialog: Component<{ ref: HTMLDivElement | undefined }> = (
           <option value="less">Less</option>
         </select>
       </p>
+
       <p class="flex justify-between">
         <span>View</span>
         <span class="grid grid-cols-2 gap-x-1">
@@ -50,6 +51,7 @@ const OptionsDialog: Component<{ ref: HTMLDivElement | undefined }> = (
           </label>
         </span>
       </p>
+
       <p>
         <label class="flex justify-between items-center">
           <span>Highlight On Hover</span>
@@ -58,6 +60,32 @@ const OptionsDialog: Component<{ ref: HTMLDivElement | undefined }> = (
             checked={globalOptions.highlightOnHover}
             onInput={(e) =>
               setGlobalOptions('highlightOnHover', e.currentTarget.checked)
+            }
+          />
+        </label>
+      </p>
+
+      <p>
+        <label class="flex justify-between items-center">
+          <span>Hide Span in Tree View</span>
+          <input
+            type="checkbox"
+            checked={globalOptions.hideSpan}
+            onInput={(e) =>
+              setGlobalOptions('hideSpan', e.currentTarget.checked)
+            }
+          />
+        </label>
+      </p>
+
+      <p>
+        <label class="flex justify-between items-center">
+          <span>Hide Node Type in Tree View</span>
+          <input
+            type="checkbox"
+            checked={globalOptions.hideType}
+            onInput={(e) =>
+              setGlobalOptions('hideType', e.currentTarget.checked)
             }
           />
         </label>

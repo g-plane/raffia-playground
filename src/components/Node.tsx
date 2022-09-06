@@ -43,6 +43,13 @@ const Node: Component<Props> = (props) => {
     setHighlightedSpan(null)
   }
 
+  const properties = () =>
+    Object.entries(props.node).filter(
+      ([key]) =>
+        (!globalOptions.hideSpan || key !== 'span') &&
+        (!globalOptions.hideType || key !== 'type')
+    )
+
   return (
     <div
       class="flex flex-col rounded-sm"
@@ -70,7 +77,7 @@ const Node: Component<Props> = (props) => {
         class="list-none ml-4"
         classList={{ hidden: !expanded() && !props.hideHead }}
       >
-        <For each={Object.entries(props.node)}>
+        <For each={properties()}>
           {([key, value]) => (
             <li>
               <Switch>
