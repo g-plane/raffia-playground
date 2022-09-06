@@ -54,7 +54,7 @@ const OptionsDialog: Component<{ ref?: HTMLDivElement | undefined }> = (
 
       <p>
         <label class="flex justify-between items-center">
-          <span>Highlight On Hover</span>
+          <span>Highlight on Hover</span>
           <input
             type="checkbox"
             checked={globalOptions.highlightOnHover}
