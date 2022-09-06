@@ -1,0 +1,5 @@
+pre[class*='language-'] {
+  background: unset;
+  padding: 0;
+  margin: 0;
+}

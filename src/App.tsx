@@ -9,6 +9,7 @@ import {
 import { Ok, Err, type Result } from 'ts-results'
 import Editor from './components/Editor'
 import Header from './components/Header'
+import JsonView from './components/JsonView'
 import Node from './components/Node'
 import { loadWasm, type ParseError } from './raffia'
 import { globalOptionsContext } from './state'
@@ -52,6 +53,9 @@ const App: Component = () => {
             <Match when={result().err}>{(result().val as ParseError)[1]}</Match>
             <Match when={globalOptions.view === 'tree'}>
               <Node node={result().val} />
+            </Match>
+            <Match when={globalOptions.view === 'json'}>
+              <JsonView ast={result().val} />
             </Match>
           </Switch>
         </div>

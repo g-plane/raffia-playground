@@ -1,6 +1,6 @@
 /* @refresh reload */
 import 'windi.css'
-import './style.css'
+import './styles/main.css'
 import { render } from 'solid-js/web'
 import App from './App'
 import { GlobalOptionsProvider } from './state'
