@@ -17,9 +17,7 @@ import { globalOptionsContext } from './state'
 const App: Component = () => {
   const [globalOptions] = useContext(globalOptionsContext)
   const [code, setCode] = createSignal('')
-  const [wasmURL] = createSignal(
-    'https://raffia-wasm.vercel.app/wasm.generated.js'
-  )
+  const [wasmURL] = createSignal('https://raffia.netlify.app/wasm.generated.js')
   const [parser] = createResource(wasmURL, loadWasm)
 
   const result = (): Result<unknown, ParseError> => {
