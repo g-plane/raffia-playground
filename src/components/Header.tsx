@@ -7,7 +7,11 @@ import {
 } from 'solid-js'
 import OptionsDialog from './OptionsDialog'
 
-const Header: Component = () => {
+interface Props {
+  onShare(): void
+}
+
+const Header: Component<Props> = ({ onShare }) => {
   const [showOptions, setShowOptions] = createSignal(false)
 
   let el: HTMLDivElement | undefined
@@ -29,17 +33,25 @@ const Header: Component = () => {
     <header class="h-14 p-3 grid grid-cols-2 bg-emerald-50 border-b-width-2px border-b-emerald-200">
       <div class="text-lg font-semibold text-stone-900">Raffia Playground</div>
       <div class="flex justify-between items-center px-4 text-sm text-emerald-800">
-        <div>
+        <div class="flex gap-x-3">
+          <div>
+            <button
+              class="btn-options border-emerald-600 border-width-1px rounded-sm px-2 py-1 hover:bg-emerald-100 active:bg-emerald-200 focus:bg-emerald-200 relative"
+              classList={{ 'bg-emerald-200': showOptions() }}
+              onClick={() => setShowOptions((show) => !show)}
+            >
+              <i class="fa-solid fa-gear mr-1"></i>Options
+            </button>
+            <Show when={showOptions()}>
+              <OptionsDialog ref={el} />
+            </Show>
+          </div>
           <button
             class="btn-options border-emerald-600 border-width-1px rounded-sm px-2 py-1 hover:bg-emerald-100 active:bg-emerald-200 focus:bg-emerald-200 relative"
-            classList={{ 'bg-emerald-200': showOptions() }}
-            onClick={() => setShowOptions((show) => !show)}
+            onClick={onShare}
           >
-            <i class="fa-solid fa-gear mr-1"></i>Options
+            <i class="fa-solid fa-share mr-1"></i>Share
           </button>
-          <Show when={showOptions()}>
-            <OptionsDialog ref={el} />
-          </Show>
         </div>
 
         <div class="flex items-center underline">

@@ -10,13 +10,16 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "js-base64": "^3.7.4",
     "monaco-editor": "^0.34.0",
+    "pako": "^2.1.0",
     "prismjs": "^1.29.0",
     "solid-js": "^1.4.7",
     "ts-results": "^3.3.0"
   },
   "devDependencies": {
     "@gplane/tsconfig": "^5.0.0",
+    "@types/pako": "^2.0.0",
     "@types/prismjs": "^1.26.0",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",

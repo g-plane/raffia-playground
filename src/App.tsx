@@ -5,8 +5,11 @@ import {
   Switch,
   createResource,
   useContext,
+  createEffect,
 } from 'solid-js'
 import { Ok, Err, type Result } from 'ts-results'
+import { gzip, ungzip } from 'pako'
+import { Base64 } from 'js-base64'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import JsonView from './components/JsonView'
@@ -15,7 +18,7 @@ import { loadWasm, type ParseError } from './raffia'
 import { globalOptionsContext } from './state'
 
 const App: Component = () => {
-  const [globalOptions] = useContext(globalOptionsContext)
+  const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
   const [code, setCode] = createSignal('')
   const [wasmURL] = createSignal('https://raffia.netlify.app/wasm.generated.js')
   const [parser] = createResource(wasmURL, loadWasm)
@@ -32,9 +35,30 @@ const App: Component = () => {
     }
   }
 
+  createEffect(() => {
+    const url = new URL(location.href)
+    const encodedInput = url.searchParams.get('code')
+    if (encodedInput) {
+      setCode(ungzip(Base64.toUint8Array(encodedInput), { to: 'string' }))
+    }
+
+    const syntax = url.searchParams.get('syntax')
+    if (syntax) {
+      setGlobalOptions('syntax', syntax)
+    }
+  })
+
+  function handleShare() {
+    const url = new URL(location.href)
+    url.searchParams.set('code', Base64.fromUint8Array(gzip(code())))
+    url.searchParams.set('syntax', globalOptions.syntax)
+    history.replaceState(null, '', url.toString())
+    navigator.clipboard.writeText(url.toString())
+  }
+
   return (
     <div>
-      <Header />
+      <Header onShare={handleShare} />
       <main class="grid grid-cols-2">
         <div>
           <Editor
