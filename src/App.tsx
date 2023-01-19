@@ -63,6 +63,7 @@ const App: Component = () => {
         <div>
           <Editor
             error={result().err ? (result().val as ParseError) : undefined}
+            value={code()}
             onInput={setCode}
           />
         </div>

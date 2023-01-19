@@ -12,6 +12,7 @@ import { highlightedSpanSignal } from '../state'
 
 interface Props {
   error?: ParseError
+  value: string
   onInput(value: string): void
 }
 
@@ -50,7 +51,12 @@ const Editor: Component<Props> = (props) => {
         return
       }
 
-      const [{ error }] = splitProps(props, ['error'])
+      const [{ error, value }] = splitProps(props, ['error', 'value'])
+
+      if (value !== model.getValue()) {
+        model.setValue(value)
+      }
+
       if (error) {
         const start = model.getPositionAt(error[0].span.start)
         const end = model.getPositionAt(error[0].span.end)
