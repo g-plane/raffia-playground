@@ -17,6 +17,9 @@ import Node from './components/Node'
 import { loadWasm, type ParseError } from './raffia'
 import { globalOptionsContext } from './state'
 
+const STORAGE_KEY_CODE = 'v1.code'
+const STORAGE_KEY_SYNTAX = 'v1.syntax'
+
 const App: Component = () => {
   const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
   const [code, setCode] = createSignal('')
@@ -38,14 +41,22 @@ const App: Component = () => {
   createEffect(() => {
     const url = new URL(location.href)
     const encodedInput = url.searchParams.get('code')
+    const storedInput = localStorage.getItem(STORAGE_KEY_CODE)
     if (encodedInput) {
       setCode(ungzip(Base64.toUint8Array(encodedInput), { to: 'string' }))
+    } else if (storedInput) {
+      setCode(storedInput)
     }
 
     const syntax = url.searchParams.get('syntax')
     if (syntax) {
       setGlobalOptions('syntax', syntax)
     }
+  })
+
+  createEffect(() => {
+    localStorage.setItem(STORAGE_KEY_CODE, code())
+    localStorage.setItem(STORAGE_KEY_SYNTAX, globalOptions.syntax)
   })
 
   function handleShare() {
