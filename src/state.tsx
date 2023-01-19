@@ -12,20 +12,22 @@ export type GlobalOptions = {
   hideType: boolean
 }
 
+const defaultGlobalOptions: GlobalOptions = {
+  syntax: 'css',
+  view: 'tree',
+  highlightOnHover: true,
+  hideSpan: false,
+  hideType: false,
+}
+
 export const globalOptionsContext = createContext<
   [GlobalOptions, SetStoreFunction<GlobalOptions>]
->(undefined!)
+>([defaultGlobalOptions, () => {}])
 
 export const GlobalOptionsProvider: Component<{ children: JSX.Element }> = (
   props
 ) => {
-  const [options, setOptions] = createStore<GlobalOptions>({
-    syntax: 'css',
-    view: 'tree',
-    highlightOnHover: true,
-    hideSpan: false,
-    hideType: false,
-  })
+  const [options, setOptions] = createStore<GlobalOptions>(defaultGlobalOptions)
 
   return (
     <globalOptionsContext.Provider value={[options, setOptions]}>
