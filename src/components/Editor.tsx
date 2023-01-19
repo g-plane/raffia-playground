@@ -62,6 +62,7 @@ const Editor: Component<Props> = (props) => {
             endLineNumber: end.lineNumber,
             endColumn: end.column,
             message: error[1],
+            source: 'Raffia',
           },
         ])
       } else {
