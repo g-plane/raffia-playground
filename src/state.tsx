@@ -1,4 +1,4 @@
-import { Component, createContext, createSignal, type JSX } from 'solid-js'
+import { type Component, createContext, createSignal, type JSX } from 'solid-js'
 import { createStore, type SetStoreFunction } from 'solid-js/store'
 import type { Span } from './raffia'
 

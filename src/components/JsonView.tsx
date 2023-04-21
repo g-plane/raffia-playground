@@ -1,4 +1,4 @@
-import { Component, onMount } from 'solid-js'
+import { type Component, onMount } from 'solid-js'
 import Prismjs from 'prismjs'
 import 'prismjs/themes/prism.min.css'
 import 'prismjs/components/prism-json.min'
