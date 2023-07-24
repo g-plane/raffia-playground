@@ -7,7 +7,7 @@ main {
 }
 
 code {
-  font-family: 'Anonymous Pro', monospace;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-family: 'Space Mono', monospace;
+  font-size: 17px;
+  font-feature-settings: 'liga' 0;
 }
