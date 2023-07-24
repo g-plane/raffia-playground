@@ -1,15 +1,11 @@
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
-import WindiCSS from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   plugins: [
     solidPlugin(),
-    WindiCSS({
-      scan: {
-        fileExtensions: ['html', 'tsx'],
-      },
-    }),
+    UnoCSS(),
   ],
   build: {
     target: 'esnext',
