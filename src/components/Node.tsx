@@ -14,6 +14,14 @@ interface Props {
   hideHead?: boolean
 }
 
+function isSpanLike(object: any) {
+  return (
+    Object.keys(object).length === 2 &&
+    typeof object.start === 'number' &&
+    typeof object.end === 'number'
+  )
+}
+
 const Node: Component<Props> = (props) => {
   const [expanded, setExpanded] = createSignal(true)
   const [childrenExpanded, setChildrenExpanded] = createSignal(
@@ -31,6 +39,8 @@ const Node: Component<Props> = (props) => {
     setHovered(true)
     if (props.node.span) {
       setHighlightedSpan(props.node.span)
+    } else if (isSpanLike(props.node)) {
+      setHighlightedSpan(props.node)
     }
   }
 
@@ -70,7 +80,11 @@ const Node: Component<Props> = (props) => {
               <i class="fa-solid fa-caret-down"></i>
             </Show>
           </div>
-          <span>{props.node.type}</span>
+          <span>
+            <Show when={isSpanLike(props.node)} fallback={props.node.type}>
+              Span
+            </Show>
+          </span>
         </button>
       </Show>
       <ul
