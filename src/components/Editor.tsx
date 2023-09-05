@@ -36,7 +36,8 @@ const Editor: Component<Props> = (props) => {
         enabled: false,
       },
       fontFamily: '"Cascadia Code", monospace',
-      fontSize: 15,
+      fontSize: 14,
+      lineHeight: 24,
       tabSize: 2,
     })
     setIsEditorReady(true)
