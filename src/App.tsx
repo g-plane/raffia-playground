@@ -23,7 +23,7 @@ const STORAGE_KEY_SYNTAX = 'v1.syntax'
 const App: Component = () => {
   const [globalOptions, setGlobalOptions] = useContext(globalOptionsContext)
   const [code, setCode] = createSignal('')
-  const [wasmURL] = createSignal('https://raffia.netlify.app/wasm.generated.js')
+  const [wasmURL] = createSignal('https://raffia.netlify.app/wasm.js')
   const [parser] = createResource(wasmURL, loadWasm)
 
   const result = (): Result<unknown, ParseError> => {

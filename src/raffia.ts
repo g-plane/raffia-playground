@@ -3,8 +3,10 @@ interface Parser {
 }
 
 export async function loadWasm(url: string): Promise<Parser> {
-  const { instantiate } = await import(/* @vite-ignore */ url)
-  const { parseStylesheet } = await instantiate()
+  const { default: init, parseStylesheet } = await import(
+    /* @vite-ignore */ url
+  )
+  await init()
   return parseStylesheet
 }
 
