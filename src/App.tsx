@@ -1,20 +1,20 @@
+import { Base64 } from 'js-base64'
+import { gzip, ungzip } from 'pako'
 import {
   type Component,
-  createSignal,
   Match,
   Switch,
-  createResource,
-  useContext,
   createEffect,
+  createResource,
+  createSignal,
+  useContext,
 } from 'solid-js'
-import { Ok, Err, type Result } from 'ts-results'
-import { gzip, ungzip } from 'pako'
-import { Base64 } from 'js-base64'
+import { Err, Ok, type Result } from 'ts-results'
 import Editor from './components/Editor'
 import Header from './components/Header'
 import JsonView from './components/JsonView'
 import Node from './components/Node'
-import { loadWasm, type ParseError } from './raffia'
+import { type ParseError, loadWasm } from './raffia'
 import { globalOptionsContext } from './state'
 
 const STORAGE_KEY_CODE = 'v1.code'

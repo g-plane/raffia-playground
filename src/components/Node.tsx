@@ -1,10 +1,10 @@
 import {
   type Component,
-  createSignal,
   For,
   Match,
   Show,
   Switch,
+  createSignal,
   useContext,
 } from 'solid-js'
 import { globalOptionsContext, highlightedSpanSignal } from '../state'
@@ -102,8 +102,7 @@ const Node: Component<Props> = (props) => {
                       setChildrenExpanded((state) => ({
                         ...state,
                         [key]: !state[key],
-                      }))
-                    }
+                      }))}
                   >
                     <span class="w-4">
                       <Switch
@@ -151,8 +150,7 @@ const Node: Component<Props> = (props) => {
                       setChildrenExpanded((state) => ({
                         ...state,
                         [key]: !state[key],
-                      }))
-                    }
+                      }))}
                   >
                     <span class="w-4">
                       <Show
@@ -164,9 +162,8 @@ const Node: Component<Props> = (props) => {
                     </span>
                     <code class="text-purple-800">{key}</code>:
                     <Show
-                      when={
-                        typeof (value as { type?: string }).type === 'string'
-                      }
+                      when={typeof (value as { type?: string }).type ===
+                        'string'}
                     >
                       <span class="ml-3">
                         {(value as { type: string }).type}

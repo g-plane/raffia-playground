@@ -10,11 +10,11 @@ export async function loadWasm(url: string): Promise<Parser> {
   return parseStylesheet
 }
 
-export type Span = { start: number; end: number }
+export type Span = { start: number, end: number }
 
 export type SyntaxError = {
-  kind: unknown
-  span: Span
+  kind: unknown,
+  span: Span,
 }
 
 export type ParseError = [SyntaxError, string]

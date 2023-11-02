@@ -1,9 +1,9 @@
 import {
   type Component,
-  createSignal,
   Show,
-  onCleanup,
   createEffect,
+  createSignal,
+  onCleanup,
 } from 'solid-js'
 import OptionsDialog from './OptionsDialog'
 

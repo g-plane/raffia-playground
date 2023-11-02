@@ -1,5 +1,5 @@
-import { type Component, onMount } from 'solid-js'
 import Prismjs from 'prismjs'
+import { type Component, onMount } from 'solid-js'
 import 'prismjs/themes/prism.min.css'
 import 'prismjs/components/prism-json.min'
 import '../styles/prism-override.css'

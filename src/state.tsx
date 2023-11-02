@@ -1,15 +1,15 @@
-import { type Component, createContext, createSignal, type JSX } from 'solid-js'
-import { createStore, type SetStoreFunction } from 'solid-js/store'
+import { type Component, type JSX, createContext, createSignal } from 'solid-js'
+import { type SetStoreFunction, createStore } from 'solid-js/store'
 import type { Span } from './raffia'
 
 export const highlightedSpanSignal = createSignal<Span | null>(null)
 
 export type GlobalOptions = {
-  syntax: string
-  view: string
-  highlightOnHover: boolean
-  hideSpan: boolean
-  hideType: boolean
+  syntax: string,
+  view: string,
+  highlightOnHover: boolean,
+  hideSpan: boolean,
+  hideType: boolean,
 }
 
 const defaultGlobalOptions: GlobalOptions = {
@@ -25,7 +25,7 @@ export const globalOptionsContext = createContext<
 >([defaultGlobalOptions, () => {}])
 
 export const GlobalOptionsProvider: Component<{ children: JSX.Element }> = (
-  props
+  props,
 ) => {
   const [options, setOptions] = createStore<GlobalOptions>(defaultGlobalOptions)
 
