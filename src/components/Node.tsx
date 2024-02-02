@@ -1,12 +1,4 @@
-import {
-  type Component,
-  For,
-  Match,
-  Show,
-  Switch,
-  createSignal,
-  useContext,
-} from 'solid-js'
+import { type Component, For, Match, Show, Switch, createSignal, useContext } from 'solid-js'
 import { globalOptionsContext, highlightedSpanSignal } from '../state'
 
 interface Props {

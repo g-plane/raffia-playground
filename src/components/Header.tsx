@@ -1,10 +1,4 @@
-import {
-  type Component,
-  Show,
-  createEffect,
-  createSignal,
-  onCleanup,
-} from 'solid-js'
+import { type Component, Show, createEffect, createSignal, onCleanup } from 'solid-js'
 import OptionsDialog from './OptionsDialog'
 
 interface Props {

@@ -58,8 +58,7 @@ const OptionsDialog: Component<{ ref?: HTMLDivElement | undefined }> = (
           <input
             type="checkbox"
             checked={globalOptions.highlightOnHover}
-            onInput={(e) =>
-              setGlobalOptions('highlightOnHover', e.currentTarget.checked)}
+            onInput={(e) => setGlobalOptions('highlightOnHover', e.currentTarget.checked)}
           />
         </label>
       </p>
@@ -70,8 +69,7 @@ const OptionsDialog: Component<{ ref?: HTMLDivElement | undefined }> = (
           <input
             type="checkbox"
             checked={globalOptions.hideSpan}
-            onInput={(e) =>
-              setGlobalOptions('hideSpan', e.currentTarget.checked)}
+            onInput={(e) => setGlobalOptions('hideSpan', e.currentTarget.checked)}
           />
         </label>
       </p>
@@ -82,8 +80,7 @@ const OptionsDialog: Component<{ ref?: HTMLDivElement | undefined }> = (
           <input
             type="checkbox"
             checked={globalOptions.hideType}
-            onInput={(e) =>
-              setGlobalOptions('hideType', e.currentTarget.checked)}
+            onInput={(e) => setGlobalOptions('hideType', e.currentTarget.checked)}
           />
         </label>
       </p>
