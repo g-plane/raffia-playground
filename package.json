@@ -12,22 +12,22 @@
     "fmt:check": "dprint check"
   },
   "dependencies": {
-    "@unocss/reset": "^0.53.6",
-    "js-base64": "^3.7.5",
-    "monaco-editor": "^0.40.0",
+    "@unocss/reset": "^66.3.3",
+    "js-base64": "^3.7.7",
+    "monaco-editor": "^0.52.2",
     "pako": "^2.1.0",
-    "prismjs": "^1.29.0",
+    "prismjs": "^1.30.0",
     "solid-js": "^1.7.8",
     "ts-results": "^3.3.0"
   },
   "devDependencies": {
-    "@gplane/tsconfig": "^6.0.0",
-    "@types/pako": "^2.0.0",
-    "@types/prismjs": "^1.26.0",
-    "dprint": "^0.45.0",
-    "typescript": "^5.1.6",
-    "unocss": "^0.53.6",
-    "vite": "^4.4.6",
-    "vite-plugin-solid": "^2.7.0"
+    "@gplane/tsconfig": "^6.2.0",
+    "@types/pako": "^2.0.3",
+    "@types/prismjs": "^1.26.5",
+    "dprint": "^0.50.1",
+    "typescript": "^5.8.3",
+    "unocss": "^66.3.3",
+    "vite": "^7.0.6",
+    "vite-plugin-solid": "^2.11.7"
   }
 }
