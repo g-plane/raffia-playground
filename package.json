@@ -4,6 +4,7 @@
   "author": "Pig Fang <g-plane@hotmail.com>",
   "license": "MIT",
   "private": true,
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
