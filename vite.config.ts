@@ -1,5 +1,4 @@
 import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte'
-import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -7,6 +6,5 @@ export default defineConfig({
     svelte({
       preprocess: vitePreprocess(),
     }),
-    UnoCSS(),
   ],
 })

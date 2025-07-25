@@ -103,6 +103,16 @@
 </script>
 
 {#if !isEditorReady}
-  <div class="p-2">Loading editor...</div>
+  <div class="loading">Loading editor...</div>
 {/if}
-<div bind:this={container} class="h-full"></div>
+<div bind:this={container} class="editor"></div>
+
+<style>
+  .loading {
+    padding: 0.5rem;
+  }
+
+  .editor {
+    height: 100%;
+  }
+</style>

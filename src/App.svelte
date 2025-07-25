@@ -64,7 +64,7 @@
 
 <div>
   <Header onshare={handleShare} />
-  <main class="grid grid-cols-2">
+  <main>
     <div>
       <Editor
         error={result.err ? result.val : undefined}
@@ -72,7 +72,7 @@
         oninput={(value) => code = value}
       />
     </div>
-    <div class="bg-light-100 right-side">
+    <div class="right">
       {#if !parser}
         Loading WebAssembly module...
       {:else if result.err}
@@ -87,7 +87,13 @@
 </div>
 
 <style>
-  .right-side {
+  main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .right {
+    background: #fcfcfc;
     border-left-width: 1px;
     padding: 0.5rem;
     overflow-y: scroll;

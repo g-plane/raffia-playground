@@ -52,7 +52,7 @@
 </script>
 
 <div
-  class="flex flex-col rounded-sm node"
+  class="node"
   class:hovered
   role="listitem"
   onmouseover={select}
@@ -61,11 +61,8 @@
   onblur={unselect}
 >
   {#if !hideHead}
-    <button
-      class="outline-none border-none bg-none h-min flex"
-      onclick={() => expanded = !expanded}
-    >
-      <div class="w-4">
+    <button onclick={() => expanded = !expanded}>
+      <div>
         {#if expanded}
           <i class="fa-solid fa-caret-down"></i>
         {:else}
@@ -81,15 +78,12 @@
       </span>
     </button>
   {/if}
-  <ul class="list-none ml-4" class:hidden={!expanded && !hideHead}>
+  <ul class:hidden={!expanded && !hideHead}>
     {#each properties as [key, value]}
       <li>
         {#if Array.isArray(value)}
-          <button
-            class="h-min flex items-center"
-            onclick={() => childrenExpanded[key] = !childrenExpanded[key]}
-          >
-            <span class="w-4">
+          <button onclick={() => childrenExpanded[key] = !childrenExpanded[key]}>
+            <span class="caret-wrapper">
               {#if value.length === 0}
                 &nbsp;
               {:else if childrenExpanded[key]}
@@ -98,8 +92,8 @@
                 <i class="fa-solid fa-caret-right"></i>
               {/if}
             </span>
-            <code class="text-purple-800">{key}</code>:
-            <span class="ml-3 text-sm">
+            <code>{key}</code>:
+            <span class="array-length">
               {#if value.length === 0}
                 <i>(empty array)</i>
               {:else if value.length === 1}
@@ -109,48 +103,37 @@
               {/if}
             </span>
           </button>
-          <div class="ml-4" class:hidden={childrenExpanded[key]}>
+          <div class="array-value" class:hidden={childrenExpanded[key]}>
             {#each value as item}
               <Node node={item} />
             {/each}
           </div>
         {:else if typeof value === 'object' && value != null}
-          <button
-            class="h-min flex items-center"
-            onclick={() => childrenExpanded[key] = !childrenExpanded[key]}
-          >
-            <span class="w-4">
+          <button onclick={() => childrenExpanded[key] = !childrenExpanded[key]}>
+            <span class="caret-wrapper">
               {#if childrenExpanded[key]}
                 <i class="fa-solid fa-caret-down"></i>
               {:else}
                 <i class="fa-solid fa-caret-right"></i>
               {/if}
             </span>
-            <code class="text-purple-800">{key}</code>:
+            <code>{key}</code>:
             {#if 'type' in value && typeof value.type === 'string'}
-              <span class="ml-3">
-                {value.type}
-              </span>
+              <span class="ast-type">{value.type}</span>
             {/if}
           </button>
           {#if childrenExpanded[key]}
             <Node node={value} hideHead />
           {/if}
         {:else if typeof value === 'string'}
-          <span class="ml-4 mr-1">
-            <code class="text-purple-800">{key}</code>:
-          </span>
-          <code class="text-rose-800 ml-1">{value}</code>
+          <span class="key"><code>{key}</code>:</span>
+          <code class="string">{value}</code>
         {:else if typeof value === 'number'}
-          <span class="ml-4 mr-1">
-            <code class="text-purple-800">{key}</code>:
-          </span>
-          <code class="text-yellow-700 ml-1">{value}</code>
+          <span class="key"><code>{key}</code>:</span>
+          <code class="number">{value}</code>
         {:else if typeof value === 'boolean' || value === null}
-          <span class="ml-4 mr-1">
-            <code class="text-purple-800">{key}</code>:
-          </span>
-          <code class="text-sky-700 ml-1">{String(value)}</code>
+          <span class="key"><code>{key}</code>:</span>
+          <code class="boolean">{String(value)}</code>
         {/if}
       </li>
     {/each}
@@ -161,9 +144,54 @@
   .node {
     display: flex;
     flex-direction: column;
+    border-radius: 2px;
+    &.hovered {
+      background-color: #f1f3f5;
+    }
+    & button {
+      outline: none;
+      border: none;
+      background: none;
+      display: flex;
+      line-height: 1.5rem;
+      & > div {
+        width: 1rem;
+      }
+    }
+    & > ul {
+      list-style: none;
+      margin-left: 1rem;
+    }
   }
-  .node.hovered {
-    background-color: #f1f3f5;
+
+  .caret-wrapper {
+    width: 1rem;
+  }
+  span.key {
+    margin: 0 0.25rem 0 1rem;
+  }
+  span.key code, .caret-wrapper + code {
+    color: #5b21b6;
+  }
+  .array-length {
+    margin-left: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+  .array-value {
+    margin-left: 1rem;
+  }
+  .ast-type {
+    margin-left: 0.75rem;
+  }
+  code.string {
+    color: #9f1239;
+  }
+  code.number {
+    color: #a16207;
+  }
+  code.boolean {
+    color: #0369a1;
   }
 
   .hidden {
