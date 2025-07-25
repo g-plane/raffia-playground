@@ -89,7 +89,7 @@
             endLineNumber: end.lineNumber,
             endColumn: end.column,
           },
-          options: { className: 'bg-light-700' },
+          options: { className: 'highlighted-span' },
         },
       ])
     } else {
@@ -108,6 +108,10 @@
 <div bind:this={container} class="editor"></div>
 
 <style>
+  :global(.highlighted-span) {
+    background-color: #e9ecef;
+  }
+
   .loading {
     padding: 0.5rem;
   }
