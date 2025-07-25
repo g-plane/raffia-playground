@@ -1,11 +1,9 @@
 {
   "extends": "@gplane/tsconfig",
   "compilerOptions": {
-    "target": "ESNext",
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["vite/client"],
     "noEmit": true,
+    "module": "preserve",
     "moduleResolution": "bundler"
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.svelte"]
 }

@@ -1,7 +1,6 @@
 # Raffia Playground
 
-Playground for inspecting AST of [Raffia](https://github.com/g-plane/raffia),
-built with [Solid.js](https://www.solidjs.com/).
+Playground for inspecting AST of [Raffia](https://github.com/g-plane/raffia).
 
 [Enjoy it.](https://raffia-play.vercel.app/)
 

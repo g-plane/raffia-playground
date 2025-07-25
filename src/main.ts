@@ -2,24 +2,19 @@
 import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css'
 import './styles/main.css'
-import { render } from 'solid-js/web'
-import App from './App'
-import { GlobalOptionsProvider } from './state'
+import { mount } from 'svelte'
+import App from './App.svelte'
 
 self.MonacoEnvironment = {
   getWorker: async () => {
     const cssWorker = await import(
+      // @ts-expect-error
       'monaco-editor/esm/vs/language/css/css.worker?worker'
     )
     return new cssWorker.default()
   },
 }
 
-render(
-  () => (
-    <GlobalOptionsProvider>
-      <App />
-    </GlobalOptionsProvider>
-  ),
-  document.querySelector('#root')!
-)
+mount(App, {
+  target: document.querySelector('#app')!,
+})

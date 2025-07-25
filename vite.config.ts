@@ -1,10 +1,12 @@
+import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
-import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
-  plugins: [solidPlugin(), UnoCSS()],
-  build: {
-    target: 'esnext',
-  },
+  plugins: [
+    svelte({
+      preprocess: vitePreprocess(),
+    }),
+    UnoCSS(),
+  ],
 })
