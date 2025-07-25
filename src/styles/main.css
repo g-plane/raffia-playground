@@ -2,10 +2,6 @@ body {
   font-family: Inter, sans-serif;
 }
 
-main {
-  min-height: calc(100vh - 3.5rem);
-}
-
 code {
   font-family: 'Space Mono', monospace;
   font-size: 17px;

@@ -90,6 +90,7 @@
   main {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    min-height: calc(100vh - 3.5rem);
   }
 
   .right {
